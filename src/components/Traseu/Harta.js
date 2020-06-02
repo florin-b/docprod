@@ -1,13 +1,31 @@
 import React, { Component } from 'react';
 import { withGoogleMap, GoogleMap, Polyline, withScriptjs } from "react-google-maps";
+import { Marker, InfoWindow } from "react-google-maps";
 import iconStop from '../../images/stop-icon.png';
 
-const {
-    MarkerWithLabel
-} = require("react-google-maps/lib/components/addons/MarkerWithLabel");
 
 class Harta extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            infoIndex: -1
+        }
+    }
+
+    handleToggleOpen = (index) => {
+        this.setState({
+            infoIndex: index
+        });
+
+    }
+
+    handleToggleClose = () => {
+        this.setState({
+            infoIndex: -1
+        });
+
+    }
 
     getTraseu() {
         let traseu = [];
@@ -25,40 +43,32 @@ class Harta extends Component {
         return traseu;
     }
 
-    getOpriri() {
 
-        const labelSize = { width: 200 };
-        const labelPadding = 2;
+    getOpriri() {
 
         if (this.props.opriri === '')
             return;
 
         let locations = this.props.opriri.split('!');
 
-        let places = locations.map((locations,i) => {
+        let places = locations.map((locations, i) => {
             let onePlace = locations.split('-');
             return (
-                <MarkerWithLabel
-                    labelStyle={{
-                        textAlign: "center",
-                        backgroundColor: "#f9fbe7",
-                        fontSize: "12px",
-                        padding: labelPadding + "px",
-                        opacity: 0.85,
-                        borderStyle : "solid",
-                        borderWidth : "0.5px",
-                        borderColor : "#bda8a7"
-                    }}
-                    labelClass="map-label"
-                    labelAnchor={{ x: labelSize.width / 4 + labelPadding, y: 60 }}
+                <Marker
                     key={i}
                     position={{ lat: parseFloat(onePlace[2]), lng: parseFloat(onePlace[3]) }}
+                    onClick={() => this.handleToggleOpen(i)}
                     icon={{
                         url: iconStop
-                      }}
+                    }}
                 >
-                    <span>{onePlace[0]}<br />{onePlace[1]}</span>
-                </MarkerWithLabel>
+                    {
+                        (this.state.infoIndex === i) &&
+                        <InfoWindow onCloseClick={() => this.handleToggleClose()}>
+                            <span><b>{onePlace[0]}</b><br />{onePlace[1]}</span>
+                        </InfoWindow>
+                    }
+                </Marker>
             )
         });
 
@@ -66,16 +76,19 @@ class Harta extends Component {
     }
 
 
+ 
+
+
     render() {
         let traseuPath = this.getTraseu();
-        
+
         return (
             <GoogleMap defaultZoom={8} center={{ lat: this.props.centerLat, lng: this.props.centerLon }}>
                 <Polyline
-                    geodesic= {true}
-                    strokeColor= {'#FF0000'}
-                    strokeOpacity= {1.0}
-                    strokeWeight= {2}
+                    geodesic={true}
+                    strokeColor={'#FF0000'}
+                    strokeOpacity={1.0}
+                    strokeWeight={2}
                     path={traseuPath}
                 />
                 {this.getOpriri()}

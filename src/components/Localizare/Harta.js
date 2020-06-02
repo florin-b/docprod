@@ -18,7 +18,6 @@ class Harta extends Component {
 
 
     handleToggleOpen = (index) => {
-
         this.setState({
             infoIndex: index
         });

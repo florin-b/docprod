@@ -32,6 +32,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 
 
+
 import {
     MuiPickersUtilsProvider,
     KeyboardDatePicker
@@ -106,7 +107,7 @@ class Traseu extends Component {
             this.setState({ stopTime: format(cDate, 'HH:mm') });
             cDate.setHours(0, 0, 0, 0);
             this.setState({ startTime: format(cDate, 'HH:mm') });
-           
+
 
 
             if (UserInfo.myInstance.getTipAngajat() === "SBDEZ")
@@ -261,7 +262,7 @@ class Traseu extends Component {
                 <Paper className={classes.paper}>
                     <TableContainer>
                         <Table size="small">
-                        {this.state.filialaVisible ? <TableRow>
+                            {this.state.filialaVisible ? <TableRow>
                                 <TableCellNoLine >Filiala</TableCellNoLine>
                                 <TableCellNoLine> <Select value={this.state.filialaSel} onChange={this.handleSelectedFiliala}>
                                     {this.createFilialeItems()}
@@ -300,6 +301,7 @@ class Traseu extends Component {
                                         <TextField
                                             id="timeStart"
                                             type="time"
+                                            ampm={false}
                                             ref="timeStart"
                                             value={this.state.startTime}
                                             onChange={e => this.setState({ startTime: e.target.value })}
@@ -339,6 +341,7 @@ class Traseu extends Component {
                                         <TextField
                                             id="timeStop"
                                             type="time"
+                                            ampm={false}
                                             value={this.state.stopTime}
                                             onChange={e => this.setState({ stopTime: e.target.value })}
                                             className={classes.textField}
@@ -380,8 +383,10 @@ class Traseu extends Component {
                             opriri={this.state.traseuOpriri}
                         />}
                     </Paper>
+                   
                 </Grid>
             </Grid>
+
         </Grid>
 
         if (UserInfo.myInstance != null) {

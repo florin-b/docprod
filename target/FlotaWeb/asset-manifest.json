@@ -1,26 +1,26 @@
 {
   "files": {
     "main.css": "http://10.1.3.72:8080/FlotaWeb/static/css/main.8b9d9a04.chunk.css",
-    "main.js": "http://10.1.3.72:8080/FlotaWeb/static/js/main.94a20d6c.chunk.js",
-    "main.js.map": "http://10.1.3.72:8080/FlotaWeb/static/js/main.94a20d6c.chunk.js.map",
+    "main.js": "http://10.1.3.72:8080/FlotaWeb/static/js/main.9b6723df.chunk.js",
+    "main.js.map": "http://10.1.3.72:8080/FlotaWeb/static/js/main.9b6723df.chunk.js.map",
     "runtime-main.js": "http://10.1.3.72:8080/FlotaWeb/static/js/runtime-main.a802c9ec.js",
     "runtime-main.js.map": "http://10.1.3.72:8080/FlotaWeb/static/js/runtime-main.a802c9ec.js.map",
     "static/css/2.de424728.chunk.css": "http://10.1.3.72:8080/FlotaWeb/static/css/2.de424728.chunk.css",
-    "static/js/2.dee2f4e5.chunk.js": "http://10.1.3.72:8080/FlotaWeb/static/js/2.dee2f4e5.chunk.js",
-    "static/js/2.dee2f4e5.chunk.js.map": "http://10.1.3.72:8080/FlotaWeb/static/js/2.dee2f4e5.chunk.js.map",
+    "static/js/2.9090d6f5.chunk.js": "http://10.1.3.72:8080/FlotaWeb/static/js/2.9090d6f5.chunk.js",
+    "static/js/2.9090d6f5.chunk.js.map": "http://10.1.3.72:8080/FlotaWeb/static/js/2.9090d6f5.chunk.js.map",
     "index.html": "http://10.1.3.72:8080/FlotaWeb/index.html",
-    "precache-manifest.0aaba3c9df60256b6f35634d80d7135a.js": "http://10.1.3.72:8080/FlotaWeb/precache-manifest.0aaba3c9df60256b6f35634d80d7135a.js",
+    "precache-manifest.ca7eee3a33e83114260a0afab75e650b.js": "http://10.1.3.72:8080/FlotaWeb/precache-manifest.ca7eee3a33e83114260a0afab75e650b.js",
     "service-worker.js": "http://10.1.3.72:8080/FlotaWeb/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "http://10.1.3.72:8080/FlotaWeb/static/css/2.de424728.chunk.css.map",
     "static/css/main.8b9d9a04.chunk.css.map": "http://10.1.3.72:8080/FlotaWeb/static/css/main.8b9d9a04.chunk.css.map",
-    "static/js/2.dee2f4e5.chunk.js.LICENSE.txt": "http://10.1.3.72:8080/FlotaWeb/static/js/2.dee2f4e5.chunk.js.LICENSE.txt",
+    "static/js/2.9090d6f5.chunk.js.LICENSE.txt": "http://10.1.3.72:8080/FlotaWeb/static/js/2.9090d6f5.chunk.js.LICENSE.txt",
     "static/media/truck-icon.png": "http://10.1.3.72:8080/FlotaWeb/static/media/truck-icon.4be445cc.png"
   },
   "entrypoints": [
     "static/js/runtime-main.a802c9ec.js",
     "static/css/2.de424728.chunk.css",
-    "static/js/2.dee2f4e5.chunk.js",
+    "static/js/2.9090d6f5.chunk.js",
     "static/css/main.8b9d9a04.chunk.css",
-    "static/js/main.94a20d6c.chunk.js"
+    "static/js/main.9b6723df.chunk.js"
   ]
 }

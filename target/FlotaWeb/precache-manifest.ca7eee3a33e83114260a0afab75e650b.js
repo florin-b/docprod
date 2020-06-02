@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "40c35a4b7161ca887fd5e3d5f903d2a8",
+    "revision": "c91632c44af51d2b70c57ce4b3420a33",
     "url": "http://10.1.3.72:8080/FlotaWeb/index.html"
   },
   {
-    "revision": "226333d58532328a0043",
+    "revision": "71ce0329c26cd1af4dce",
     "url": "http://10.1.3.72:8080/FlotaWeb/static/css/2.de424728.chunk.css"
   },
   {
-    "revision": "530ddb7ac825c2821b13",
+    "revision": "aa7b9ed4a90368108830",
     "url": "http://10.1.3.72:8080/FlotaWeb/static/css/main.8b9d9a04.chunk.css"
   },
   {
-    "revision": "226333d58532328a0043",
-    "url": "http://10.1.3.72:8080/FlotaWeb/static/js/2.dee2f4e5.chunk.js"
+    "revision": "71ce0329c26cd1af4dce",
+    "url": "http://10.1.3.72:8080/FlotaWeb/static/js/2.9090d6f5.chunk.js"
   },
   {
     "revision": "dd8e555b238f0730147860c9b5c39392",
-    "url": "http://10.1.3.72:8080/FlotaWeb/static/js/2.dee2f4e5.chunk.js.LICENSE.txt"
+    "url": "http://10.1.3.72:8080/FlotaWeb/static/js/2.9090d6f5.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "530ddb7ac825c2821b13",
-    "url": "http://10.1.3.72:8080/FlotaWeb/static/js/main.94a20d6c.chunk.js"
+    "revision": "aa7b9ed4a90368108830",
+    "url": "http://10.1.3.72:8080/FlotaWeb/static/js/main.9b6723df.chunk.js"
   },
   {
     "revision": "534ab8e4e8716e97e0aa",

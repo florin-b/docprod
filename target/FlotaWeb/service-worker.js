@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "http://10.1.3.72:8080/FlotaWeb/precache-manifest.0aaba3c9df60256b6f35634d80d7135a.js"
+  "http://10.1.3.72:8080/FlotaWeb/precache-manifest.ca7eee3a33e83114260a0afab75e650b.js"
 );
 
 self.addEventListener('message', (event) => {
