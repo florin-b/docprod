@@ -25,6 +25,10 @@ import PageHeader from '../UI/PageHeader/PageHeader';
 import { Redirect } from 'react-router';
 import AppLogo from '../UI/AppLogo/AppLogo';
 
+import greenTruck from '../../images/green_truck.png';
+import redTruck from '../../images/red_truck.png';
+import blueTruck from '../../images/blue_truck.png';
+
 const styles = {
     pageContent: {
         marginTop: '20px',
@@ -40,6 +44,11 @@ const styles = {
         fontWeight: 'bold',
         background: '#F8F6FF'
 
+    },
+    infoText: {
+        color: '#80809f',
+        fontSize: '15px',
+        marginRight: '40px'
     }
 };
 
@@ -266,7 +275,15 @@ class Localizare extends Component {
                         masiniData={this.state.masiniData}
                     />}
                 </Paper>}
+                {this.state.loadingMap || this.state.masiniData.length === 0 ? <div></div> : <div >
+                    <span className={classes.infoText}><img src={redTruck} alt="Borderou activ" /> Borderou activ    </span>
+                    <span className={classes.infoText}><img src={greenTruck} alt="Borderou terminat" /> Borderou terminat    </span>
+                    <span className={classes.infoText}><img src={blueTruck} alt="Fara borderou"/> Fara borderou    </span>
+                </div>}
+                <br></br><br></br><br></br>
             </Grid>
+
+
         </Grid>
 
 
