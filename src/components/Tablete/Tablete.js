@@ -65,10 +65,12 @@ class Tablete extends Component {
             loadingSoferi: false,
             soferSel: '-1',
             textCodVisible: false,
+            textSimVisible: false,
             infoTablete: [],
             loadingStatus: false,
             operatie: '',
             codTableta: '',
+            codSim: '',
             filialaSel: 'NN10',
             filialaVisible: false
         }
@@ -78,6 +80,7 @@ class Tablete extends Component {
         this.saveChanges = this.saveChanges.bind(this);
         this.handleRadioChange = this.handleRadioChange.bind(this);
         this.handleCodChange = this.handleCodChange.bind(this);
+        this.handleSimChange = this.handleSimChange.bind(this);
         this.handleSelectedFiliala = this.handleSelectedFiliala.bind(this);
 
     }
@@ -159,7 +162,9 @@ class Tablete extends Component {
         this.setState({
             soferSel: event.target.value,
             codTableta: '',
+            codSim: '',
             textCodVisible: false,
+            textSimVisible: false,
             operatie: ''
 
         });
@@ -180,6 +185,7 @@ class Tablete extends Component {
             }
         })
             .then(res => {
+                console.log('tablete: ' + JSON.stringify(res.data));
                 this.setState({ infoTablete: res.data, loadingStatus: false });
             })
             .catch(error => {
@@ -198,6 +204,7 @@ class Tablete extends Component {
         axios.get('/distributie/gestiune', {
             params: {
                 codTableta: this.state.codTableta,
+                codSim: this.state.codSim,
                 codSofer: this.state.soferSel,
                 operatie: this.state.operatie
             }
@@ -218,12 +225,14 @@ class Tablete extends Component {
         if (event.target.value === 'add') {
             this.setState({
                 textCodVisible: true,
+                textSimVisible: true,
                 operatie: 'aloca'
             });
         }
         else {
             this.setState({
                 textCodVisible: false,
+                textSimVisible: false,
                 operatie: 'sterge'
             });
         }
@@ -232,6 +241,10 @@ class Tablete extends Component {
     handleCodChange(event) {
         this.setState({ codTableta: event.target.value });
 
+    }
+
+    handleSimChange(event) {
+        this.setState({ codSim: event.target.value });
     }
 
     render() {
@@ -278,6 +291,7 @@ class Tablete extends Component {
                                 <TableCellNoLine>Operatii</TableCellNoLine>
                                 <TableCellNoLine>{radioGroup}</TableCellNoLine>
                                 <TableCellNoLine> {this.state.textCodVisible ? <TextField value={this.state.codTableta} label="Cod tableta" autoFocus onChange={this.handleCodChange} /> : <div></div>}</TableCellNoLine>
+                                <TableCellNoLine> {this.state.textSimVisible ? <TextField value={this.state.codSim} label="Cod sim" onChange={this.handleSimChange} /> : <div></div>}</TableCellNoLine>
                             </TableRow>
                         </Table>
                     </TableContainer>
@@ -289,7 +303,7 @@ class Tablete extends Component {
                 <br></br><br></br>
                 {this.state.loadingStatus ? <LoadingSpinner /> : <Status statusInfo={this.state.infoTablete}></Status>}
             </Grid>
-           
+
         </Grid>
 
 
@@ -310,7 +324,7 @@ class Tablete extends Component {
             )
         }
         else {
-            return (<Redirect to='/' />);
+            return (<Redirect to='/FlotaWeb' />);
         }
     }
 }

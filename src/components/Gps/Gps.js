@@ -24,6 +24,11 @@ const styles = {
 
 class Gps extends Component {
 
+
+    //state = {loadingData: false, gpsStatus: []}
+
+
+
     constructor(props) {
         super(props);
         this.state = {
@@ -34,10 +39,18 @@ class Gps extends Component {
 
     componentDidMount() {
         if (UserInfo.myInstance != null) {
-            this.setState({ loadingData: true });
+
+            this.setState(() => {
+                return {
+                    loadingData: true
+                }
+            });
+
             this.getGpsStatus();
         }
     }
+
+    
 
     getGpsStatus() {
         axios.get('/distributie/gps', {
@@ -46,8 +59,12 @@ class Gps extends Component {
             }
         })
             .then(res => {
-                this.setState({ loadingData: false });
-                this.setState({ gpsStatus: res.data });
+                this.setState(() => {
+                    return {
+                        loadingData: false,
+                        gpsStatus: res.data
+                    }
+                })
             })
             .catch(error => {
                 if (error.response) {
@@ -76,7 +93,7 @@ class Gps extends Component {
                 <div>
                     <Container fluid >
                         <Row>
-                            <Col xs={2}><AppLogo/></Col>
+                            <Col xs={2}><AppLogo /></Col>
                             <Col xs={9}><PageHeader headerName='Module GPS inactive' /></Col>
                         </Row>
                         <Row>
@@ -88,7 +105,7 @@ class Gps extends Component {
             )
         }
         else {
-            return (<Redirect to='/' />);
+            return (<Redirect to='/FlotaWeb' />);
         }
     }
 

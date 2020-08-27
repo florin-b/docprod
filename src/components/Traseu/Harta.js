@@ -4,6 +4,8 @@ import { Marker, InfoWindow } from "react-google-maps";
 import iconStop from '../../images/stop-icon.png';
 
 
+
+
 class Harta extends Component {
 
     constructor(props) {
@@ -75,11 +77,70 @@ class Harta extends Component {
         return places;
     }
 
+    degreesToRadians(degrees) {
+        return degrees * Math.PI / 180;
+    }
 
- 
+
+    getDistanceBetweenPoints(lat1, lng1, lat2, lng2) {
+
+        let R = 6378137;
+        let dLat = this.degreesToRadians(lat2 - lat1);
+        let dLong = this.degreesToRadians(lng2 - lng1);
+        let a = Math.sin(dLat / 2)
+            *
+            Math.sin(dLat / 2)
+            +
+            Math.cos(this.degreesToRadians(lat1))
+            *
+            Math.cos(this.degreesToRadians(lat1))
+            *
+            Math.sin(dLong / 2)
+            *
+            Math.sin(dLong / 2);
+
+        let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        let distance = R * c;
+
+        return distance;
+    }
+
+
+    animateCar() {
+
+
+
+        let traseuPath = this.getTraseu();
+
+        traseuPath = traseuPath.map((coordinates, i, array) => {
+            if (i === 0) {
+                return { ...coordinates, distance: 0 }; // it begins here!
+            }
+            const { lat: lat1, lng: lng1 } = coordinates;
+            const latLong1 = new window.google.maps.LatLng(lat1, lng1);
+
+
+            const { lat: lat2, lng: lng2 } = array[0];
+            const latLong2 = new window.google.maps.LatLng(lat2, lng2);
+
+            const distance = this.getDistanceBetweenPoints(latLong1.lat(), latLong1.lng(), latLong2.lat(), latLong2.lng());
+
+            return { ...coordinates, distance };
+        });
+
+
+
+
+
+
+
+    }
 
 
     render() {
+
+        // this.animateCar();
+
         let traseuPath = this.getTraseu();
 
         return (

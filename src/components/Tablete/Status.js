@@ -31,6 +31,7 @@ class Status extends Component {
             return (
                 <TableRow key={index} style={index % 2 ? { background: "#F8F6FF" } : { background: "white" }}>
                     <TableCell className={classes.body}>{eveniment.id}</TableCell>
+                    <TableCell className={classes.body}>{eveniment.codSim}</TableCell>
                     <TableCell className={classes.body}>{eveniment.dataInreg}</TableCell>
                     <TableCell className={classes.body}>{eveniment.stare}</TableCell>
                 </TableRow>
@@ -54,6 +55,7 @@ class Status extends Component {
                     <TableHead >
                         <TableRow >
                             <TableCell className={classes.header}>Cod tableta</TableCell>
+                            <TableCell className={classes.header}>Cod sim</TableCell>
                             <TableCell className={classes.header}>Data</TableCell>
                             <TableCell className={classes.header}>Stare</TableCell>
                         </TableRow>

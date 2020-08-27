@@ -225,7 +225,7 @@ class Traseu extends Component {
             })
             .catch(error => {
                 if (error.response) {
-
+                    console.log(error.response);
                 }
             });
 
@@ -354,9 +354,7 @@ class Traseu extends Component {
                                         />
                                     </form>
                                 </TableCellNoLine>
-
                             </TableRow>
-
                         </Table>
                     </TableContainer>
                 </Paper>
@@ -383,10 +381,9 @@ class Traseu extends Component {
                             opriri={this.state.traseuOpriri}
                         />}
                     </Paper>
-                   
+
                 </Grid>
             </Grid>
-
         </Grid>
 
         if (UserInfo.myInstance != null) {
@@ -407,7 +404,7 @@ class Traseu extends Component {
             )
         }
         else {
-            return (<Redirect to='/' />);
+            return (<Redirect to='/FlotaWeb' />);
         }
     }
 }

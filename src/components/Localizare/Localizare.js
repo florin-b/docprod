@@ -305,7 +305,7 @@ class Localizare extends Component {
             )
         }
         else {
-            return (<Redirect to='/' />);
+            return (<Redirect to='/FlotaWeb' />);
         }
     }
 }

@@ -14,7 +14,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
-import MuiTableCell from "@material-ui/core/TableCell";
+import MuiTableCell from '@material-ui/core/TableCell';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import DateFnsUtils from '@date-io/date-fns';
@@ -63,8 +63,6 @@ const styles = {
     }
 };
 
-
-
 class Activitate extends Component {
 
     constructor(props) {
@@ -85,8 +83,8 @@ class Activitate extends Component {
             mapCenterLat: 0,
             mapCenterLon: 0,
             traseuData: '',
-            loadingMap: false,
-        }
+            loadingMap: false
+        };
 
         this.myRef = React.createRef();
 
@@ -100,30 +98,25 @@ class Activitate extends Component {
 
 
         this.getBordMap = this.getBordMap.bind(this);
-
-
-
     }
 
     componentDidMount() {
-
         if (UserInfo.myInstance != null) {
             this.selectSoferi = this.refs.selectSoferiRef;
             this.getSoferiService();
         }
     }
 
-    componentDidUpdate() {
-
-
-        //  this.el.scrollIntoView({ behavior: 'smooth' });
-    }
-
 
 
     getSoferiService() {
 
-        this.setState({ loadingSoferi: true });
+        this.setState(() => {
+            return {
+                loadingSoferi: true
+            }
+        });
+
         axios.get('/distributie/soferi', {
             params: {
                 filiala: UserInfo.getInstance().getUnitLog()
@@ -131,13 +124,21 @@ class Activitate extends Component {
         })
             .then(res => {
                 this.handleSoferiResponse(res);
-                this.setState({ loadingSoferi: false });
+                this.setState(() => {
+                    return {
+                        loadingSoferi: false
+                    }
+                });
 
             })
             .catch(error => {
                 if (error.response) {
                     console.log(error.responderEnd);
-                    this.setState({ loadingSoferi: false });
+                    this.setState(() => {
+                        return {
+                            loadingSoferi: false
+                        }
+                    });
                 }
             });
     }
@@ -145,38 +146,56 @@ class Activitate extends Component {
 
     getBorderouriService() {
 
-
-
         const postParams = {
             codSofer: this.soferSel,
             dataStart: format(this.state.dataStartBord, 'dd.MM.yyyy'),
             dataStop: format(this.state.dataStopBord, 'dd.MM.yyyy')
         };
 
-        this.setState({ loadingBord: true });
+        this.setState(() => {
+            return {
+                loadingBord: true
+            }
+        })
+
         axios.post('/distributie/borderouri', postParams)
             .then(res => {
-                this.setState({ loadingBord: false });
+                this.setState(() => {
+                    return {
+                        loadingBord: false
+                    }
+                })
                 this.handleBordResponse(res);
             })
             .catch(error => {
                 if (error.response) {
-                    this.setState({ loadingBord: false });
+                    this.setState(() => {
+                        return {
+                            loadingBord: false
+                        }
+                    })
                     console.log(error.responderEnd);
                 }
             });
-
-
-
     }
 
     handleBordResponse(response) {
-        this.setState({ borderouSel: 'Selectati un borderou' });
-        this.setState({ listBord: response.data });
+        this.setState(() => {
+            return {
+                borderouSel: 'Selectati un borderou',
+                listBord: response.data
+            }
+        })
+
     }
 
     handleSoferiResponse(response) {
-        this.setState({ listSoferi: response.data });
+
+        this.setState(() => {
+            return {
+                listSoferi: response.data
+            }
+        })
     }
 
     async handleDateStartChange(date1) {
@@ -194,7 +213,7 @@ class Activitate extends Component {
         this.setState({ hartaBord: '' });
         await this.setState({ dataStopBord: date1 });
         this.getBorderouriService();
-    }    
+    }
 
     createBordItems() {
 
@@ -225,31 +244,50 @@ class Activitate extends Component {
 
     handleSelectedSofer(event) {
         this.soferSel = event.target.value;
-        this.setState({ borderouInfo: [] });
-        this.setState({ sumarInfo: '' });
-        this.setState({ hartaBord: '' });
+
+        this.setState(() => {
+            return {
+                borderouInfo: [],
+                sumarInfo: '',
+                hartaBord: ''
+            }
+        })
+
         this.getBorderouriService();
     }
 
     handleSelectedBorderou(event) {
-        this.setState({ borderouSel: event.target.value });
-        this.setState({ hartaBord: '' });
+
+        this.setState(() => {
+            return {
+                borderouSel: event.target.value,
+                hartaBord: ''
+            }
+        })
+
         this.getInfoBordService(event.target.value);
     }
 
     getInfoBordService(borderou) {
 
-        this.setState({ loadingBordData: true });
+        this.setState(() => {
+            return {
+                loadingBordData: true
+            }
+        })
+
         axios.get('/distributie/activitateBord', {
             params: {
                 borderou: borderou
             }
         })
             .then(res => {
-                this.setState({
-                    loadingBordData: false,
-                    borderouInfo: res.data.evenimenteTraseu,
-                    sumarInfo: res.data.sumarTraseu
+                this.setState(() => {
+                    return {
+                        loadingBordData: false,
+                        borderouInfo: res.data.evenimenteTraseu,
+                        sumarInfo: res.data.sumarTraseu
+                    }
                 });
 
                 const etapeNode = ReactDOM.findDOMNode(this.refs.etape);
@@ -280,9 +318,11 @@ class Activitate extends Component {
             }
         })
             .then(res => {
-                this.setState({
-                    loadingMap: false,
-                    hartaBord: res.data
+                this.setState(() => {
+                    return {
+                        loadingMap: false,
+                        hartaBord: res.data
+                    }
                 });
                 this.getMapCenter(res.data);
             })
@@ -301,13 +341,14 @@ class Activitate extends Component {
 
         let center = HartaHelper.getMapCenter(istoricTraseu).split('#');
 
-        this.setState({
-            traseuData: istoricTraseu,
-            mapCenterLat: parseFloat(center[0]),
-            mapCenterLon: parseFloat(center[1])
+        this.setState(() => {
+            return {
+                traseuData: istoricTraseu,
+                mapCenterLat: parseFloat(center[0]),
+                mapCenterLon: parseFloat(center[1])
+            }
         });
 
-        
         this.el.scrollIntoView({ behavior: 'smooth' });
 
     }
@@ -328,7 +369,7 @@ class Activitate extends Component {
                                     {this.createSoferiItems()}
                                 </Select>}
 
-                                ></TableCellNoLine>
+                                </TableCellNoLine>
                             </TableRow>
                             <TableRow>
                                 <TableCellNoLine>Interval</TableCellNoLine>
@@ -401,7 +442,7 @@ class Activitate extends Component {
 
             <br></br>
             <Grid item xs={12} >
-                
+
                 {this.state.loadingMap ? <LoadingSpinner /> :
                     <Paper className={classes.paper} >
                         {this.state.hartaBord === '' ? <div></div> :
@@ -419,11 +460,11 @@ class Activitate extends Component {
 
             </Grid>
 
-            <div  className={classes.emptyMap}></div>
+            <div className={classes.emptyMap}></div>
 
             <br></br>
 
-            <div  />
+            <div />
         </Grid>
 
 
@@ -440,7 +481,7 @@ class Activitate extends Component {
                 <div>
                     <Container fluid >
                         <Row>
-                            <Col xs={2}><AppLogo/></Col>
+                            <Col xs={2}><AppLogo /></Col>
                             <Col xs={9}><PageHeader headerName="Activitate soferi" /></Col>
                         </Row>
                         <Row>
@@ -452,7 +493,7 @@ class Activitate extends Component {
             )
         }
         else {
-            return (<Redirect to='/' />);
+            return (<Redirect to='/FlotaWeb' />);
         }
     }
 }

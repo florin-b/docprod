@@ -50,9 +50,9 @@ const routing = (
 
 
 
-/*
-//develop
 
+//develop
+/*
 const routing = (
 
   <Router history={history} basename={'/FlotaWeb'}>
@@ -70,8 +70,8 @@ const routing = (
   </Router>
 
 )
-
 */
+
 
 ReactDOM.render(routing, document.getElementById('root'));
 
