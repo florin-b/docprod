@@ -9,7 +9,7 @@ class Iesire extends Component {
     }
 
     render() {
-        return (<Redirect to='/FlotaWeb' />);
+        return (<Redirect to='/documentatie' />);
     }
 
 }

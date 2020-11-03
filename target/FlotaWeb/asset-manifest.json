@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "http://10.1.3.72:8080/FlotaWeb/static/css/main.8b9d9a04.chunk.css",
-    "main.js": "http://10.1.3.72:8080/FlotaWeb/static/js/main.234089f4.chunk.js",
-    "main.js.map": "http://10.1.3.72:8080/FlotaWeb/static/js/main.234089f4.chunk.js.map",
+    "main.js": "http://10.1.3.72:8080/FlotaWeb/static/js/main.266bec80.chunk.js",
+    "main.js.map": "http://10.1.3.72:8080/FlotaWeb/static/js/main.266bec80.chunk.js.map",
     "runtime-main.js": "http://10.1.3.72:8080/FlotaWeb/static/js/runtime-main.a802c9ec.js",
     "runtime-main.js.map": "http://10.1.3.72:8080/FlotaWeb/static/js/runtime-main.a802c9ec.js.map",
     "static/css/2.de424728.chunk.css": "http://10.1.3.72:8080/FlotaWeb/static/css/2.de424728.chunk.css",
     "static/js/2.a419de7a.chunk.js": "http://10.1.3.72:8080/FlotaWeb/static/js/2.a419de7a.chunk.js",
     "static/js/2.a419de7a.chunk.js.map": "http://10.1.3.72:8080/FlotaWeb/static/js/2.a419de7a.chunk.js.map",
     "index.html": "http://10.1.3.72:8080/FlotaWeb/index.html",
-    "precache-manifest.ca512068024247afed54db8296598b92.js": "http://10.1.3.72:8080/FlotaWeb/precache-manifest.ca512068024247afed54db8296598b92.js",
+    "precache-manifest.9b127262c2753188bf5bb0e0b89b6d79.js": "http://10.1.3.72:8080/FlotaWeb/precache-manifest.9b127262c2753188bf5bb0e0b89b6d79.js",
     "service-worker.js": "http://10.1.3.72:8080/FlotaWeb/service-worker.js",
     "static/css/2.de424728.chunk.css.map": "http://10.1.3.72:8080/FlotaWeb/static/css/2.de424728.chunk.css.map",
     "static/css/main.8b9d9a04.chunk.css.map": "http://10.1.3.72:8080/FlotaWeb/static/css/main.8b9d9a04.chunk.css.map",
@@ -21,6 +21,6 @@
     "static/css/2.de424728.chunk.css",
     "static/js/2.a419de7a.chunk.js",
     "static/css/main.8b9d9a04.chunk.css",
-    "static/js/main.234089f4.chunk.js"
+    "static/js/main.266bec80.chunk.js"
   ]
 }

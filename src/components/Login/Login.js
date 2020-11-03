@@ -14,8 +14,8 @@ class Login extends Component {
         super(props);
 
         this.state = {
-            user: '',
-            password: '',
+            user: 'androsd',
+            password: '112',
             loading: false,
             infoVisible: false,
             infoText: ''
@@ -31,7 +31,7 @@ class Login extends Component {
 
 
     componentDidMount() {
-        document.title = 'Management flota';
+        document.title = 'Documentatie produse';
     }
 
     setUser(e) {
@@ -51,7 +51,7 @@ class Login extends Component {
             password: this.state.password
         };
 
-        axios.post('/distributie/login', postParams)
+        axios.post('/documente/login', postParams)
             .then(res => {
                 this.setState({ loading: false });
                 this.handleServiceResponse(res);
@@ -112,7 +112,7 @@ class Login extends Component {
             <div>
                 <form onSubmit={this.handleSubmit} className={classes.LoginForm}>
 
-                    <h3 className={classes.Title}>Management flota</h3>
+                    <h3 className={classes.Title}>Documentatie produse</h3>
                     <br></br>
                     <div >
                         <input type="text" value={this.state.user} placeholder="Utilizator" className={classes.TextInput} onChange={this.setUser} />

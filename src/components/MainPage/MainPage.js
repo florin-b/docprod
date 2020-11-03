@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import { withStyles } from '@material-ui/core/styles';
 import PageHeader from '../UI/PageHeader/PageHeader';
 import CardMedia from '@material-ui/core/CardMedia';
-import truckIcon from '../../images/truck-icon.png';
+import documentsIcon from '../../images/my_documents.png';
 import Paper from '@material-ui/core/Paper';
 import { Redirect } from 'react-router';
 import AppLogo from '../UI/AppLogo/AppLogo';
@@ -24,7 +24,7 @@ const styles = {
         alignItems: "center"
     },
     drawerPaper: {
-        backgroundImage: { truckIcon }
+        backgroundImage: { documentsIcon }
     }
 };
 
@@ -65,7 +65,7 @@ class MainPage extends Component {
                                                 <TableCellNoLine ></TableCellNoLine>
                                                 <TableCellNoLine>
                                                     <CardMedia >
-                                                        <img src={truckIcon} alt="recipe thumbnail" />
+                                                        <img src={documentsIcon} alt="recipe thumbnail" />
                                                     </CardMedia>
                                                 </TableCellNoLine>
                                                 <TableCellNoLine ></TableCellNoLine>
@@ -84,7 +84,7 @@ class MainPage extends Component {
 
             )
         } else {
-            return (<Redirect to='/FlotaWeb' />);
+            return (<Redirect to='/documente' />);
         }
     }
 

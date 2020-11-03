@@ -8,12 +8,7 @@ class UserInfo {
     tipAngajat = "";
     unitLog = "";
     menuItems = [
-        { name: 'activitate', label: 'Activitate soferi' },
-        { name: 'localizare', label: 'Localizare masini' },
-        { name: 'traseu', label: 'Traseu masina' },
-        { name: 'gps', label: 'Module GPS inactive' },
-        { name: 'tablete', label: 'Gestiune tablete' },
-        { name: 'avarie', label: 'Avarie masina' },
+        { name: 'document', label: 'Documente produse' },
         { name: 'iesire', label: 'Iesire' }
     ]
 

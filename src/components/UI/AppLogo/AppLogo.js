@@ -25,7 +25,7 @@ class AppLogo extends Component {
         const { classes } = this.props;
 
         return (
-            <Paper className={classes.paper}>MANAGEMENT FLOTA</Paper>
+            <Paper className={classes.paper}>DOCUMENTATIE PRODUSE</Paper>
         )
     }
 

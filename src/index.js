@@ -4,12 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import MainPage from './components/MainPage/MainPage';
-import Activitate from './components/Activitate/Activitate';
-import Localizare from './components/Localizare/Localizare';
-import Traseu from './components/Traseu/Traseu';
-import Gps from './components/Gps/Gps';
-import Tablete from './components/Tablete/Tablete';
-import Avarie from './components/Avarie/Avarie';
+
+import Document from './components/Document/Document';
 import Iesire from './components/Iesire/Iesire';
 import history from "./utils/history";
 import { Route, Router } from 'react-router-dom';
@@ -19,7 +15,7 @@ import axios from 'axios';
 
 
 //For prod
-
+/*
 axios.defaults.baseURL = "http://10.1.3.72:8080/distserv";
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 axios.defaults.headers.common['Access-Control-Allow-Headers'] = 'Origin, Accept, Content-Type, Authorization, Access-Control-Allow-Origin';
@@ -45,32 +41,27 @@ const routing = (
 
 )
 
-
+*/
 //
 
 
 
 
 //develop
-/*
+
 const routing = (
 
-  <Router history={history} basename={'/FlotaWeb'}>
+  <Router history={history} basename={'/documente'}>
     <div>
       <Route exact path="/" component={App} />
       <Route path="/main" component={MainPage} />
-      <Route path="/activitate" component={Activitate} />
-      <Route path="/localizare" component={Localizare} />
-      <Route path="/traseu" component={Traseu} />
-      <Route path="/gps" component={Gps} />
-      <Route path="/tablete" component={Tablete} />
-      <Route path="/avarie" component={Avarie} />
+      <Route path="/document" component={Document} />
       <Route path="/iesire" component={Iesire} />
     </div>
   </Router>
 
 )
-*/
+
 
 
 ReactDOM.render(routing, document.getElementById('root'));
