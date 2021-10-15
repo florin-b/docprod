@@ -7,8 +7,12 @@ class UserInfo {
     codDepart = "";
     tipAngajat = "";
     unitLog = "";
+    tipAcces = "";
     menuItems = [
         { name: 'document', label: 'Documente produse' },
+        { name: 'sintetic', label: 'Tipuri documente' },
+        { name: 'sarja', label: 'Sintetice sarja' },
+        { name: 'raport', label: 'Raport documente' },
         { name: 'iesire', label: 'Iesire' }
     ]
 
@@ -70,6 +74,14 @@ class UserInfo {
 
     setUnitLog(unitLog) {
         this.unitLog = unitLog;
+    }
+
+    getTipAcces() {
+        return this.tipAcces;
+    }
+
+    setTipAcces(tipAcces) {
+        this.tipAcces = tipAcces;
     }
 
     getMenuItems() {

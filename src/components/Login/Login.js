@@ -14,8 +14,8 @@ class Login extends Component {
         super(props);
 
         this.state = {
-            user: 'androsd',
-            password: '112',
+            user: '',
+            password: '',
             loading: false,
             infoVisible: false,
             infoText: ''
@@ -65,6 +65,7 @@ class Login extends Component {
     }
 
     loadUserInstance(response) {
+
         let userInstance = UserInfo.getInstance();
         userInstance.setCodPers(response.data.codPers);
         userInstance.setNume(response.data.nume);
@@ -72,10 +73,15 @@ class Login extends Component {
         userInstance.setCodDepart(response.data.codDepart);
         userInstance.setTipAngajat(response.data.tipAngajat);
         userInstance.setUnitLog(response.data.unitLog);
+        userInstance.setTipAcces(response.data.tipAcces);
+        userInstance.setCodDepart(response.data.codDepart);
+
     }
 
 
     handleServiceResponse(response) {
+
+
 
         if (!response.data.successLogon) {
             this.setState({ infoText: response.data.logonMessage });

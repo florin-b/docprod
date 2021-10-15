@@ -26,7 +26,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import { TableRow } from '@material-ui/core';
 import DocumentAsociat from './DocumentAsociat';
-import { format } from "date-fns";
+
+import ListItem from '@material-ui/core/ListItem';
+import Checkbox from '@material-ui/core/Checkbox';
+import List from '@material-ui/core/List';
 
 const styles = {
     pageContent: {
@@ -60,6 +63,11 @@ const styles = {
     },
     tableContainer: {
         backgroundColor: '#FAFAFA'
+    },
+    listItem: {
+        height: '22px',
+        color: '#80809f',
+        fontSize: '12px'
     }
 };
 
@@ -88,7 +96,12 @@ class Document extends React.Component {
             articolSel: '-1',
             loadingArticole: false,
             listDocumenteArt: [],
-            loadingDocumente: false
+            loadingDocumente: false,
+            tipDocAsoc: [],
+            isNrSarja: false,
+            articoleSintetic: [],
+            artSintSelected: [],
+            loadingArtSint: false
 
         }
 
@@ -97,29 +110,38 @@ class Document extends React.Component {
         this.codChange = this.codChange.bind(this);
         this.cautaArticol = this.cautaArticol.bind(this);
         this.codArticolChange = this.codArticolChange.bind(this);
+        this.keyDownArticol = this.keyDownArticol.bind(this);
         this.afiseazaRepere = this.afiseazaRepere.bind(this);
         this.handleSelectedArticol = this.handleSelectedArticol.bind(this);
-
-
-
+        this.handleArtSintSel = this.handleArtSintSel.bind(this);
+        this.localArtSintSel = [];
 
     }
 
     articolChange(event) {
-        this.setState({ selectieArticol: event.target.value, filtruReper: '' });
+        this.localArtSintSel = [];
+        this.setState({ selectieArticol: event.target.value, filtruReper: '', listArticole: [{ cod: '-1', nume: 'Selectati un articol' }], articolSel: '-1', articoleSintetic: [] });
     };
 
     codChange(event) {
-        this.setState({ selectieCod: event.target.value, filtruReper: '' });
+        this.localArtSintSel = [];
+        this.setState({ selectieCod: event.target.value, filtruReper: '', listArticole: [{ cod: '-1', nume: 'Selectati un articol' }], articolSel: '-1', articoleSintetic: [] });
     }
 
     codArticolChange(event) {
-        this.setState({ filtruReper: event.target.value });
+        this.localArtSintSel = [];
+        this.setState({ filtruReper: event.target.value, articoleSintetic: [] });
+    }
+
+    keyDownArticol(event) {
+        if (event.keyCode === 13) {
+            this.cautaArticol(null);
+        }
     }
 
     cautaArticol(event) {
 
-        this.setState({ articolSel: '-1', loadingArticole: true });
+        this.setState({ articolSel: '-1', loadingArticole: true, articoleSintetic: [] });
 
         axios.get('/documente/cautaArticol', {
             params: {
@@ -137,11 +159,7 @@ class Document extends React.Component {
                 }
             });
 
-
-
-
     }
-
 
 
     afiseazaRepere() {
@@ -154,33 +172,36 @@ class Document extends React.Component {
                     strArticol = item.nume;
 
                 return (
-                    <MenuItem key={i} value={item.cod}>{strArticol}</MenuItem>
+                    <MenuItem key={i} value={item.cod} name={i}>{strArticol}</MenuItem>
                 )
             }, this);
 
-
         return articoleList;
-
     }
 
 
     handleSelectedArticol(event) {
 
+
+        this.setTipDocAsoc(event.target.value);
         this.setState({ loadingDocumente: true });
 
         axios.get('/documente/getDocumente', {
             params: {
-                codArticol: event.target.value
+                codArticol: event.target.value,
+                tipArticol: this.state.selectieArticol
             }
         })
             .then(res => {
                 this.setState(() => {
                     return {
-                        articolSel: event.target.value, listDocumenteArt: res.data,
+                        articolSel: event.target.value, listDocumenteArt: res.data.listDocumente, isNrSarja: res.data.nrSarja,
                         loadingDocumente: false
                     }
                 });
 
+                if (this.state.selectieArticol === 'artsint')
+                    this.getArticoleSintetic(event.target.value);
 
             })
             .catch(error => {
@@ -189,35 +210,149 @@ class Document extends React.Component {
                 }
             });
 
+    }
+
+
+    getArticoleSintetic(codSintetic) {
+
+        this.setState({ loadingArtSint: true });
+
+        axios.get('/documente/getArticoleSintetic', {
+            params: {
+                codSintetic: codSintetic
+            }
+        })
+            .then(res => {
+                this.setState({ articoleSintetic: res.data, loadingArtSint: false });
+            })
+            .catch(error => {
+                if (error.response) {
+                    console.log(error.responderEnd);
+                }
+            });
 
     }
 
 
-    afisDocumenteAsociate() {
+    createArticoleSinteticItems() {
 
+        const { classes } = this.props;
+
+        let articoleList = this.state.articoleSintetic.length > 0
+            && this.state.articoleSintetic.map((item, i) => {
+                return (
+                    <ListItem key={item.cod} className={classes.listItem} >
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    id={item.cod}
+                                    value={item.cod || ''}
+                                    onChange={this.handleArtSintSel}
+                                    checked={item.checked || false}
+                                />
+                            }
+                            label={item.nume + ' (' + item.cod + ')'}
+                        />
+                    </ListItem>
+                )
+            }, this);
+
+        return articoleList;
+
+    }
+
+
+    handleArtSintSel(event) {
+
+        let localList = this.state.articoleSintetic;
+
+        localList.forEach(artSint => {
+            if (artSint.cod === event.target.value)
+                artSint.checked = event.target.checked
+        });
+
+        this.setState({ artSintSelected: localList })
+
+
+        if (event.target.checked) {
+            this.localArtSintSel.push(event.target.value);
+        }
+        else {
+            this.localArtSintSel.splice(this.localArtSintSel.indexOf(event.target.value), 1);
+        }
+
+        this.setState({ artSintSelected: this.localArtSintSel });
+
+
+    }
+
+    setTipDocAsoc(codArticol) {
+
+        if (codArticol === '-1')
+            return;
+
+        let localTipDoc = '';
+        let localTipDocAsoc = [];
+
+        this.state.listArticole.forEach((articol, i) => {
+
+            if (articol.cod === codArticol) {
+                localTipDoc = articol.tipDocumente;
+            }
+
+
+        });
+
+        let arrayTipDoc = localTipDoc.split(',');
+
+        Constants.tipDocumenteArticol.forEach((item, i) => {
+            arrayTipDoc.forEach((tipDoc) => {
+
+                if (tipDoc === item.cod)
+                    localTipDocAsoc.push(item);
+
+            });
+
+        });
+
+        this.setState({ tipDocAsoc: localTipDocAsoc });
+
+    }
+
+    afisDocumenteAsociate() {
 
 
         if (this.state.articolSel !== '-1') {
 
-            let documenteList = Constants.tipDocumenteArticol.map((item, i) => {
+            let documenteList = this.state.tipDocAsoc.map((item, i) => {
 
-                let docStartValid = format(new Date(), 'dd.MM.yyyy');
-                let docStopValid = format(new Date(), 'dd.MM.yyyy');
+
                 let docAlocat = false;
+                let listDocumente = [];
+                let mandtNrSarja = false;
 
-                this.state.listDocumenteArt.length > 0 && this.state.listDocumenteArt.map((doc, j) => {
+                this.state.listDocumenteArt.length > 0 && this.state.listDocumenteArt.forEach((doc, j) => {
 
-                    if (i === j) {
-                        docStartValid = doc.dataStartVal;
-                        docStopValid = doc.dataStopVal;
+                    if (item.cod === doc.tip) {
                         docAlocat = true;
+                        listDocumente = doc.listDocumente;
                     }
 
                 });
 
+
+                //sarja doar pentru Performantele determinate si verificate de producator
+                if (item.cod === '6' && this.state.isNrSarja && (this.state.selectieArticol === 'articol' || this.state.selectieArticol === 'artsint')) {
+                    mandtNrSarja = true;
+                }
+
+
+
+
                 return (
-                    <DocumentAsociat tipDocument={item} articol={this.state.articolSel} docStartValid={docStartValid} docStopValid={docStopValid} docAlocat={docAlocat} ></DocumentAsociat>
+                    <DocumentAsociat key={i} tipDocument={item} articol={this.state.articolSel} docAlocat={docAlocat} listDocumente={listDocumente} isNrSarja={mandtNrSarja} listArticole={this.localArtSintSel} tipArticol={this.state.selectieArticol}></DocumentAsociat>
                 )
+
             });
 
             return documenteList;
@@ -231,69 +366,78 @@ class Document extends React.Component {
         let resultZone =
             this.state.articolSel === '-1' ? < div></div> : <TableContainer>
                 <Table size="small">
-                    <TableRow>
-                        <TableCellNoLine className={classes.columnHeader}>Documente asociate reperului {this.state.articolSel}</TableCellNoLine>
-                    </TableRow>
-                    <TableRow >
-                        {this.afisDocumenteAsociate()}
-                    </TableRow>
+                    <tbody>
+                        <TableRow>
+                            <TableCellNoLine className={classes.columnHeader}>Documente asociate reperului {this.state.articolSel}</TableCellNoLine>
+                        </TableRow>
+                        <TableRow >
+                            {this.afisDocumenteAsociate()}
+                        </TableRow>
+                    </tbody>
                 </Table>
             </TableContainer>
 
+        let artSintZone = <TableRow>
+            <TableCellNoLine className={classes.columnLabel}>Articole</TableCellNoLine>
+            <TableCellNoLine >
+                <div style={{ maxWidth: 550, maxHeight: 150, overflow: 'auto' }}>
+                    <List>
+                        {this.createArticoleSinteticItems()}
+                    </List>
+                </div>
+            </TableCellNoLine>
+        </TableRow>
 
         let selectionZone = <Grid container spacing={4}>
             <Grid item xs={12}>
                 <Paper className={classes.paper}>
-
                     <TableContainer className={classes.tableContainer}>
                         <Table size="small">
-                            <TableRow>
-                                <TableCellNoLine className={classes.columnLabel}>Reper</TableCellNoLine>
-                                <TableCellNoLine className={classes.columnContent}>
-                                    <RadioGroup row aria-label="tipSel" name="tipSel1" onChange={this.articolChange}>
-                                        <FormControlLabel value="articol" control={<Radio />} label="Articol" checked={this.state.selectieArticol === 'articol'} />
-                                        <FormControlLabel value="sintetic" control={<Radio />} label="Sintetic" checked={this.state.selectieArticol === 'sintetic'} />
-                                    </RadioGroup>
-                                </TableCellNoLine>
-                            </TableRow>
-
-                            <TableRow>
-                                <TableCellNoLine className={classes.columnLabel}>Criteriu</TableCellNoLine>
-                                <TableCellNoLine className={classes.columnContent}>
-                                    <RadioGroup row aria-label="tipSel" name="tipSel1" onChange={this.codChange}>
-                                        <FormControlLabel value="cod" control={<Radio />} label="Cod" checked={this.state.selectieCod === 'cod'} />
-                                        <FormControlLabel value="nume" control={<Radio />} label="Nume" checked={this.state.selectieCod === 'nume'} />
-                                    </RadioGroup>
-                                </TableCellNoLine>
-                            </TableRow>
-
-                            <TableRow>
-                                <TableCellNoLine className={classes.columnLabel}>Filtru</TableCellNoLine>
-                                <TableCellNoLine >
-                                    <TextField className={classes.columnContent} id="codArticol" onChange={this.codArticolChange} value={this.state.filtruReper} />
-                                </TableCellNoLine>
-                                <TableCellNoLine className={classes.columnContent2}><Button variant="outlined" size="small" onClick={this.cautaArticol}>Cauta</Button></TableCellNoLine>
-                            </TableRow>
-                            <TableRow>
-                                <TableCellNoLine className={classes.columnLabel}>Rezultat</TableCellNoLine>
-                                <TableCellNoLine >
-                                    <Select className={classes.columnContent} value={this.state.articolSel} onChange={this.handleSelectedArticol}>
-                                        {this.afiseazaRepere()}
-                                    </Select>
-                                </TableCellNoLine>
-                                <TableCellNoLine >{this.state.loadingArticole ? <LoadingSpinner /> : <div className={classes.recordsCount}>{this.state.listArticole.length - 1} inregistrari</div>} </TableCellNoLine>
-                            </TableRow>
+                            <tbody>
+                                <TableRow>
+                                    <TableCellNoLine className={classes.columnLabel}>Reper</TableCellNoLine>
+                                    <TableCellNoLine className={classes.columnContent}>
+                                        <RadioGroup row aria-label="tipSel" name="tipSel1" onChange={this.articolChange}>
+                                            <FormControlLabel value="articol" control={<Radio />} label="Articol" checked={this.state.selectieArticol === 'articol'} />
+                                            <FormControlLabel value="sintetic" control={<Radio />} label="Sintetic" checked={this.state.selectieArticol === 'sintetic'} />
+                                            <FormControlLabel value="artsint" control={<Radio />} label="Articole sintetic" checked={this.state.selectieArticol === 'artsint'} />
+                                        </RadioGroup>
+                                    </TableCellNoLine>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCellNoLine className={classes.columnLabel}>Criteriu</TableCellNoLine>
+                                    <TableCellNoLine className={classes.columnContent}>
+                                        <RadioGroup row aria-label="tipSel" name="tipSel1" onChange={this.codChange}>
+                                            <FormControlLabel value="cod" control={<Radio />} label="Cod" checked={this.state.selectieCod === 'cod'} />
+                                            <FormControlLabel value="nume" control={<Radio />} label="Nume" checked={this.state.selectieCod === 'nume'} />
+                                        </RadioGroup>
+                                    </TableCellNoLine>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCellNoLine className={classes.columnLabel}>Filtru</TableCellNoLine>
+                                    <TableCellNoLine >
+                                        <TextField className={classes.columnContent} id="codArticol" onKeyDown={this.keyDownArticol} onChange={this.codArticolChange} value={this.state.filtruReper} />
+                                    </TableCellNoLine>
+                                    <TableCellNoLine className={classes.columnContent2}><Button variant="outlined" size="small" onClick={this.cautaArticol}>Cauta</Button></TableCellNoLine>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCellNoLine className={classes.columnLabel}>Rezultat</TableCellNoLine>
+                                    <TableCellNoLine >
+                                        <Select className={classes.columnContent} value={this.state.articolSel} onChange={this.handleSelectedArticol}>
+                                            {this.afiseazaRepere()}
+                                        </Select>
+                                    </TableCellNoLine>
+                                    <TableCellNoLine >{this.state.loadingArticole ? <LoadingSpinner /> : <div className={classes.recordsCount}>{this.state.listArticole.length - 1} inregistrari</div>} </TableCellNoLine>
+                                </TableRow>
+                                {this.state.selectieArticol === 'artsint' && this.state.articolSel !== '-1' ? artSintZone : <TableRow></TableRow>}
+                            </tbody>
                         </Table>
                     </TableContainer>
                 </Paper>
                 <br></br><br></br>
                 {this.state.loadingDocumente ? <LoadingSpinner /> : <div />}
-
                 {resultZone}
-
             </Grid>
-
-
         </Grid >
 
 
@@ -318,7 +462,7 @@ class Document extends React.Component {
 
         }
         else {
-            return (<Redirect to='/documente' />);
+            return (<Redirect to='/docuser' />);
         }
 
 

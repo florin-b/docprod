@@ -61,15 +61,17 @@ class MainPage extends Component {
                                 <Paper >
                                     <TableContainer>
                                         <Table size="small">
-                                            <TableRow>
-                                                <TableCellNoLine ></TableCellNoLine>
-                                                <TableCellNoLine>
-                                                    <CardMedia >
-                                                        <img src={documentsIcon} alt="recipe thumbnail" />
-                                                    </CardMedia>
-                                                </TableCellNoLine>
-                                                <TableCellNoLine ></TableCellNoLine>
-                                            </TableRow>
+                                            <tbody>
+                                                <TableRow>
+                                                    <TableCellNoLine ></TableCellNoLine>
+                                                    <TableCellNoLine>
+                                                        <CardMedia >
+                                                            <img src={documentsIcon} alt="recipe thumbnail" />
+                                                        </CardMedia>
+                                                    </TableCellNoLine>
+                                                    <TableCellNoLine ></TableCellNoLine>
+                                                </TableRow>
+                                            </tbody>
                                         </Table>
                                     </TableContainer>
 
@@ -84,7 +86,7 @@ class MainPage extends Component {
 
             )
         } else {
-            return (<Redirect to='/documente' />);
+            return (<Redirect to='/docuser' />);
         }
     }
 
